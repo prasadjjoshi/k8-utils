@@ -20,22 +20,22 @@
 
    1.5 Sample output:
 
-	 {
-	      "ip-123-4-10-222.us-west-1": [         # extracted from "Name" field, not an actual ip its just a sample
-	    {
-	      "Name": "ip-123-4-10-222.us-west-1"
-	    },
-	    {
-	      "cpu": {                               # extracted from "Allocated resources" field
-	        "Requests": "7363m (92%)",
-	        "Limits": "6453m (80%)"
-	      }
-	    },
-	    {
-	      "memory": {
-	        "Requests": "7381039Ki (46%)",
-	        "Limits": "7106607Ki (45%)"
-	      }
-	    }
-	  ]
-	 }
+		 {
+		      "ip-123-4-10-222.us-west-1": [         # extracted from "Name" field, not an actual ip its just a sample
+		    {
+		      "Name": "ip-123-4-10-222.us-west-1"
+		    },
+		    {
+		      "cpu": {                               # extracted from "Allocated resources" field
+		        "Requests": "7363m (92%)",
+		        "Limits": "6453m (80%)"
+		      }
+		    },
+		    {
+		      "memory": {
+		        "Requests": "7381039Ki (46%)",
+		        "Limits": "7106607Ki (45%)"
+		      }
+		    }
+		  ]
+		 }
