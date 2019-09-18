@@ -20,7 +20,7 @@
 
    1.5 Sample output:
 
-	 ```{
+	 {
 	      "ip-123-4-10-222.us-west-1": [         # extracted from "Name" field, not an actual ip its just a sample
 	    {
 	      "Name": "ip-123-4-10-222.us-west-1"
@@ -38,4 +38,4 @@
 	      }
 	    }
 	  ]
-	 }```
+	 }
