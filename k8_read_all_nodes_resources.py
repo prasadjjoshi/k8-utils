@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+""" This script executes the command kubectl describe nodes and outputs the node name, cpu stats & memory stats in
+     a json file. Author https://github.com/prasadjjoshi """
+
+
 import os
 import json
 
@@ -7,15 +11,8 @@ DESCRIBE_COMMAND_OUTPUT_FILE = 'nodes.log'
 node_properties = {}
 ALLOCATED_RESOURCES = 'Allocated resources'
 props_to_read = ('Name', ALLOCATED_RESOURCES)
-
-
-myCmd = 'kubectl describe nodes > ' + DESCRIBE_COMMAND_OUTPUT_FILE
-os.system(myCmd)
-describe_command_output_file = os.getcwd() + '/' + DESCRIBE_COMMAND_OUTPUT_FILE
-lines = open(describe_command_output_file, "r")
 node_name_dict = {}
 node_name = ""
-
 
 def get_name():
     global line, node_name, node_name_dict
@@ -71,6 +68,14 @@ def get_allocated_resources():
         line = lines.__next__()  # iterating till events to get all resources
 
 
+# kubectl command to execute & outputting in nodes.log file in cwd
+myCmd = 'kubectl describe nodes > ' + DESCRIBE_COMMAND_OUTPUT_FILE
+os.system(myCmd)
+describe_command_output_file = os.getcwd() + '/' + DESCRIBE_COMMAND_OUTPUT_FILE
+
+
+# Iterating through command's output in nodes.log and reading values
+lines = open(describe_command_output_file, "r")
 if lines.__sizeof__() > 0:
     for line in lines:
         if line.startswith("Name"):
@@ -87,6 +92,7 @@ r = json.dumps(node_properties, indent=2)
 
 print(r)
 
+# Outputting in output.json file in cwd
 with open('output.json', 'w') as outfile:
     json.dump(node_properties, outfile, indent=2)
 
