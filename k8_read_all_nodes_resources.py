@@ -68,31 +68,32 @@ def get_allocated_resources():
         line = lines.__next__()  # iterating till events to get all resources
 
 
-# kubectl command to execute & outputting in nodes.log file in cwd
-myCmd = 'kubectl describe nodes > ' + DESCRIBE_COMMAND_OUTPUT_FILE
-os.system(myCmd)
-describe_command_output_file = os.getcwd() + '/' + DESCRIBE_COMMAND_OUTPUT_FILE
+def kubectl_describe_nodes():
+    global lines, line
+    # kubectl command to execute & outputting in nodes.log file in cwd
+    myCmd = 'kubectl describe nodes > ' + DESCRIBE_COMMAND_OUTPUT_FILE
+    os.system(myCmd)
+    describe_command_output_file = os.getcwd() + '/' + DESCRIBE_COMMAND_OUTPUT_FILE
+    # Iterating through command's output in nodes.log and reading values
+    lines = open(describe_command_output_file, "r")
+    if lines.__sizeof__() > 0:
+        for line in lines:
+            if line.startswith("Name"):
+                get_name()
+
+            elif line.startswith(ALLOCATED_RESOURCES):
+                get_allocated_resources()
+
+                all_props_of_node = [node_name_dict, cpu_res, mem_res]
+                node_properties[node_name] = all_props_of_node
+    r = json.dumps(node_properties, indent=2)
+    print(r)
+    # Outputting in output.json file in cwd
+    with open('output.json', 'w') as outfile:
+        json.dump(node_properties, outfile, indent=2)
 
 
-# Iterating through command's output in nodes.log and reading values
-lines = open(describe_command_output_file, "r")
-if lines.__sizeof__() > 0:
-    for line in lines:
-        if line.startswith("Name"):
-            get_name()
+if __name__ == '__main__':
+    kubectl_describe_nodes()
 
-        elif line.startswith(ALLOCATED_RESOURCES):
-            get_allocated_resources()
-
-            all_props_of_node = [node_name_dict, cpu_res, mem_res]
-            node_properties[node_name] = all_props_of_node
-
-
-r = json.dumps(node_properties, indent=2)
-
-print(r)
-
-# Outputting in output.json file in cwd
-with open('output.json', 'w') as outfile:
-    json.dump(node_properties, outfile, indent=2)
 
